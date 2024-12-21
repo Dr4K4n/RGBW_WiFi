@@ -56,9 +56,6 @@ void handleRoot() {
     color = CHSV(h.toInt(), s.toInt(), v.toInt());
   }
 
-  //char temp[400];
-  //sprintf ( temp, "H:%d S:%d V:%d", color.h, color.s, color.v);
-  //server.sendHeader("Access-Control-Allow-Origin", "*");
   server.send_P ( 200, "text/html", MAIN_page);
 }
 
@@ -93,44 +90,5 @@ void loop() {
     leds[i] = color;
   }
   leds.convert_to_rgbw();
-  FastLED.delay(300);
-
- /* // fill first half of LEDs with a HSV rainbow
-  static uint8_t hue = 0;
-  constexpr int HALF_LEDS = NUM_LEDS/2;
-  for(int i = 0; i <= HALF_LEDS; ++i) {
-    // set only RGB values
-    leds[i] = CHSV(hue+i, 200-i, 128);
-  }
-  
-  // alternatively use fill_gradient to get the same result as the for loop:
-  //fill_gradient(&leds[0], HALF_LEDS + 1, CHSV(hue, 200, 255), CHSV(hue + HALF_LEDS, 200 - HALF_LEDS, 255));
-  
-  ++hue;
-
-  
-  // CRGBWArray allows for some convenience functions, like copying some RGB values
-  constexpr int ODD_FIX = NUM_LEDS % 2 - 1; // For even NUM_LEDs: -1, for odd NUM_LEDs: 0
-  leds(HALF_LEDS, NUM_LEDS-1) = leds(HALF_LEDS + ODD_FIX, 0);
-
-
-  // add moving bar with screen blending
-  static uint16_t pos = 0;
-  constexpr uint16_t WIDTH = 4;
-  for (uint16_t i = 0; i < WIDTH; ++i) {
-    uint16_t wrapped_pos = (pos + i) % NUM_LEDS;
-    leds[wrapped_pos].screen_blend(CRGB::FairyLightNCC);
-  }
-  
-  if (++pos >= NUM_LEDS)
-    pos -= NUM_LEDS;
-
-  // prepare to send
-  leds.convert_to_rgbw();
-  
-  // send
   FastLED.delay(100);
-
-  // optionally revert the conversion, if you want to modify the values instead of overwriting
-  //leds.revert_to_rgb();*/
 }
